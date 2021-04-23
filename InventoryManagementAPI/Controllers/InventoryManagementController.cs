@@ -1,87 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using InventoryManagementAPI.Boundary;
+using InventoryManagementAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class InventoryManagementController : Controller
     {
-        // GET: InventoryManagementController
-        public ActionResult Index()
+        private readonly IInventoryManagementService _inventoryManagementService;
+
+        public InventoryManagementController(IInventoryManagementService inventoryManagementService)
         {
-            return View();
+            _inventoryManagementService = inventoryManagementService;
+        }
+
+        // GET: InventoryManagementController
+
+        /// <summary>
+        /// Gets all Items of inventory from the repository.
+        /// </summary>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="DataConflictException"></exception>
+        [HttpGet]
+        public async Task<IEnumerable<InventoryItemsDetails>> GetItemsAsync()
+        {
+            return await _inventoryManagementService.GetAllItemsAsync();
         }
 
         // GET: InventoryManagementController/Details/5
-        public ActionResult Details(int id)
+        /// <summary>
+        /// Gets Items by Id from inventory.
+        /// </summary>
+        /// <param name="itemId">ItemId</param>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="DataConflictException"></exception>
+        [HttpGet("itemId")]
+        public async Task<InventoryItemsDetails> GetItemsByIdAsync(long itemId)
         {
-            return View();
+            return await _inventoryManagementService.GetItemByIdAsync(itemId);
         }
 
-        // GET: InventoryManagementController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
+        /// <summary>
+        /// Add new Item in the list.
+        /// </summary>
+        /// <param name="itemId">ItemId</param>
+        /// <param name="inventoryItemsDetails">Inventory Items Details</param>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="DataConflictException"></exception>
         // POST: InventoryManagementController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<long> CreateItem(long itemId, InventoryItemsDetails inventoryItemsDetails)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return await _inventoryManagementService.AddNewItem(itemId, inventoryItemsDetails);
         }
 
-        // GET: InventoryManagementController/Edit/5
-        public ActionResult Edit(int id)
+        /// <summary>
+        /// Update Item in the list.
+        /// </summary>
+        /// <param name="itemId">ItemId</param>
+        /// <param name="inventoryItemsDetails">Inventory Items Details</param>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="DataConflictException"></exception>
+        [HttpPut]
+        public async Task<string> UpdateItem(long itemId, InventoryItemsDetails inventoryItemsDetails)
         {
-            return View();
+            return await _inventoryManagementService.UpdateItem(itemId, inventoryItemsDetails);
         }
 
-        // POST: InventoryManagementController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        /// <summary>
+        /// Delete Item from the list.
+        /// </summary>
+        /// <param name="itemId">ItemId</param>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="DataConflictException"></exception>
+        [HttpDelete]
+        public async Task<string> DeleteItem(long itemId)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: InventoryManagementController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: InventoryManagementController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return await _inventoryManagementService.DeleteItem(itemId);
         }
     }
 }
