@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InventoryManagementAPI.Boundary;
 using InventoryManagementAPI.DBContext;
+using InventoryManagementAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +31,10 @@ namespace InventoryManagementAPI
 		{
 			services.AddDbContext<InventoryItemsDetailsContext>(opts => 
 										opts.UseSqlServer(Configuration["ConnectionString:InventoryItemDB"]));
+
+			services.AddScoped<IInventoryManagementService, InventoryManagementServiceRepository>();
 			services.AddControllers();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
