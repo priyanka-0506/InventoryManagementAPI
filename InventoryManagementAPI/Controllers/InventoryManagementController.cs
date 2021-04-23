@@ -17,20 +17,18 @@ namespace InventoryManagementAPI.Controllers
             _inventoryManagementService = inventoryManagementService;
         }
 
-        // GET: InventoryManagementController
-
         /// <summary>
         /// Gets all Items of inventory from the repository.
         /// </summary>
         /// <exception cref="NotFoundException"></exception>
         /// <exception cref="DataConflictException"></exception>
         [HttpGet]
+        [Route("Items")]
         public async Task<IEnumerable<InventoryItemsDetails>> GetItemsAsync()
         {
             return await _inventoryManagementService.GetAllItemsAsync();
         }
 
-        // GET: InventoryManagementController/Details/5
         /// <summary>
         /// Gets Items by Id from inventory.
         /// </summary>
@@ -50,9 +48,7 @@ namespace InventoryManagementAPI.Controllers
         /// <param name="inventoryItemsDetails">Inventory Items Details</param>
         /// <exception cref="NotFoundException"></exception>
         /// <exception cref="DataConflictException"></exception>
-        // POST: InventoryManagementController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<long> CreateItem(long itemId, InventoryItemsDetails inventoryItemsDetails)
         {
             return await _inventoryManagementService.AddNewItem(itemId, inventoryItemsDetails);
