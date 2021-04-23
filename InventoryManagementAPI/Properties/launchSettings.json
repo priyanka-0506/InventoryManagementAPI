@@ -10,17 +10,17 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "InventoryManagement",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "launchUrl": "InventoryManagement/Items",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
     },
     "InventoryManagementAPI": {
         "commandName": "Project",
         "launchBrowser": true,
-        "launchUrl": "InventoryManagement",
+        "launchUrl": "InventoryManagement/Items",
         "applicationUrl": "https://localhost:5001;http://localhost:5000",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
