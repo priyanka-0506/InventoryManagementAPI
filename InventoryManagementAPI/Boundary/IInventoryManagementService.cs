@@ -21,7 +21,7 @@ namespace InventoryManagementAPI.Boundary
         /// <param name="itemId">ItemId</param>
         /// <exception cref="NotFoundException"></exception>
         /// <exception cref="DataConflictException"></exception>
-        Task<IEnumerable<InventoryItemsDetails>> GetItemByIdAsync(long itemId);
+        Task<InventoryItemsDetails> GetItemByIdAsync(long itemId);
 
         /// <summary>
         /// Add new Item in the list.
